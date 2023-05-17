@@ -25,11 +25,11 @@ public class Slutprojekt {
             idb = new InfDB("mibdb", "3306",  "mibdba", "mibkey");
         }catch(InfException ex){
             Logger.getLogger(Slutprojekt.class.getName()).log(Level.SEVERE, null,ex);
-        }
+        } new Forsta(idb).setVisible(true);
         
         String fraga = "SELECT namn FROM agent where agent_id = 1";
         String svar = idb.fetchSingle(fraga);
-        System.out.println(svar);
+        //System.out.println(svar);
         
         
     }
