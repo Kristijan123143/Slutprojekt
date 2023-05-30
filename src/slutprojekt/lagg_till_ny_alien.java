@@ -4,8 +4,12 @@
  */
 package slutprojekt;
 
+import java.awt.HeadlessException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import oru.inf.InfDB;
 import oru.inf.InfException;
 
@@ -19,10 +23,16 @@ public class lagg_till_ny_alien extends javax.swing.JFrame {
     /**
      * Creates new form lagg_till_ny_alien
      */
-    public lagg_till_ny_alien(InfDB idb, String email) {
+    public lagg_till_ny_alien(InfDB idb, String email, String namn) {
         initComponents();
         this.idb = idb;
-        Agent_L.setText(email);
+        email_L.setText(email);
+        agent_L.setText(namn);
+        alien_id_tf.setEditable(false);
+        fyllCb();
+        getAdmin(email);
+        fyllCbAgent();
+        ras_rb.setSelected(true);
     }
 
     /**
@@ -34,46 +44,51 @@ public class lagg_till_ny_alien extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel3 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        ansvarig_agent_tf = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
-        ny_email_tf = new javax.swing.JTextField();
-        jLabel10 = new javax.swing.JLabel();
-        alien_id_tf = new javax.swing.JTextField();
-        telefonnummer_tf = new javax.swing.JTextField();
-        registreringsdatum_tf = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
-        plats_tf = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        losenord_tf = new javax.swing.JTextField();
-        jLabel12 = new javax.swing.JLabel();
-        namn_tf = new javax.swing.JTextField();
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        avsluta_btn = new javax.swing.JButton();
+        tillbaka_btn = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel12 = new javax.swing.JLabel();
+        namn_tf = new javax.swing.JTextField();
+        alien_id_tf = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        telefonnummer_tf = new javax.swing.JTextField();
+        registreringsdatum_tf = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        agent_cb = new javax.swing.JComboBox<>();
+        jLabel6 = new javax.swing.JLabel();
+        val_cb = new javax.swing.JComboBox<>();
+        jLabel8 = new javax.swing.JLabel();
+        ny_email_tf = new javax.swing.JTextField();
+        losenord_tf = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        extra_tf = new javax.swing.JTextField();
+        extra_L = new javax.swing.JLabel();
+        worm_rb = new javax.swing.JRadioButton();
+        squid_rb = new javax.swing.JRadioButton();
+        bolodite_rb = new javax.swing.JRadioButton();
+        ras_rb = new javax.swing.JRadioButton();
+        ras_L = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
         ny_alien = new javax.swing.JButton();
+        uppdatera_btn = new javax.swing.JButton();
+        ta_bort_alien_btn = new javax.swing.JButton();
+        andra_alien = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        alien_val_cb = new javax.swing.JComboBox<>();
+        sok_btn = new javax.swing.JButton();
+        jPanel5 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
-        Agent_L = new javax.swing.JLabel();
+        agent_L = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
         email_L = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jLabel3.setText("Telefonnummer");
-
-        jLabel7.setText("Ansvarig agent");
-
-        jLabel4.setText("Registreringsdatum");
-
-        jLabel8.setText("Email");
-
-        jLabel10.setText("Lösenord");
-
-        jLabel6.setText("Plats");
-
-        jLabel2.setText("Alien ID");
-
-        jLabel12.setText("Namn");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -98,6 +113,195 @@ public class lagg_till_ny_alien extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        avsluta_btn.setText("Avsluta");
+        avsluta_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                avsluta_btnActionPerformed(evt);
+            }
+        });
+
+        tillbaka_btn.setText("Tillbaka");
+        tillbaka_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tillbaka_btnActionPerformed(evt);
+            }
+        });
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        jLabel12.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel12.setText("Namn");
+
+        jLabel2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel2.setText("Alien ID");
+
+        jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel3.setText("Telefonnummer");
+
+        jLabel4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel4.setText("Registreringsdatum");
+
+        jLabel7.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel7.setText("Ansvarig agent");
+
+        agent_cb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Välj en ansvarig agent" }));
+
+        jLabel6.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel6.setText("Plats");
+
+        val_cb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Välj", "Örebro", "Västerås", "Vilhelmina", "Borås", " " }));
+
+        jLabel8.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel8.setText("Email");
+
+        losenord_tf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                losenord_tfActionPerformed(evt);
+            }
+        });
+
+        jLabel10.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel10.setText("Lösenord");
+
+        buttonGroup1.add(worm_rb);
+        worm_rb.setText("Worm");
+        worm_rb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                worm_rbActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(squid_rb);
+        squid_rb.setText("Squid");
+        squid_rb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                squid_rbActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(bolodite_rb);
+        bolodite_rb.setText("Boglodite");
+        bolodite_rb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bolodite_rbActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(ras_rb);
+        ras_rb.setText("Välj ras");
+
+        ras_L.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        ras_L.setText("Ras");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(41, 41, 41)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING))
+                            .addGap(18, 18, 18)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(alien_id_tf)
+                                .addComponent(namn_tf, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING))
+                            .addGap(18, 18, 18)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(registreringsdatum_tf, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(telefonnummer_tf, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING))
+                            .addGap(18, 18, 18)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(val_cb, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(ny_email_tf)
+                                .addComponent(losenord_tf, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                        .addGap(43, 43, 43)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(extra_L, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(ras_L)
+                                    .addComponent(jLabel7)
+                                    .addComponent(squid_rb))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(agent_cb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(ras_rb)
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(extra_tf, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                            .addComponent(worm_rb)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(bolodite_rb))))))))
+                .addContainerGap(73, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(namn_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(alien_id_tf, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(telefonnummer_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(registreringsdatum_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addGap(12, 12, 12)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ny_email_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(losenord_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(val_cb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addGap(20, 20, 20)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(agent_cb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ras_L)
+                    .addComponent(ras_rb))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(worm_rb)
+                    .addComponent(bolodite_rb)
+                    .addComponent(squid_rb))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(extra_tf, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(extra_L, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(57, Short.MAX_VALUE))
+        );
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
         ny_alien.setText("Lägg till alien");
         ny_alien.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -105,150 +309,794 @@ public class lagg_till_ny_alien extends javax.swing.JFrame {
             }
         });
 
-        jLabel11.setFont(new java.awt.Font("Segoe UI Historic", 0, 12)); // NOI18N
+        uppdatera_btn.setText("Uppdatera");
+        uppdatera_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                uppdatera_btnActionPerformed(evt);
+            }
+        });
+
+        ta_bort_alien_btn.setText("Ta bort");
+        ta_bort_alien_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ta_bort_alien_btnActionPerformed(evt);
+            }
+        });
+
+        andra_alien.setText("Ändra alien");
+        andra_alien.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                andra_alienActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGap(43, 43, 43)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(andra_alien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(ta_bort_alien_btn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(uppdatera_btn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(ny_alien, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(44, 44, 44))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addComponent(andra_alien, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(ny_alien, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(uppdatera_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(ta_bort_alien_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(20, Short.MAX_VALUE))
+        );
+
+        jPanel4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        jLabel5.setText("Välj alien");
+
+        alien_val_cb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Välj" }));
+
+        sok_btn.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        sok_btn.setText("Sök");
+        sok_btn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        sok_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sok_btnActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(alien_val_cb, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(sok_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(83, 83, 83))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(alien_val_cb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(sok_btn)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(17, Short.MAX_VALUE))
+        );
+
+        jPanel5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        jLabel11.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel11.setText(" Inloggad som");
+
+        agent_L.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+
+        jLabel9.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel9.setText("Epost");
+
+        email_L.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(agent_L, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(12, Short.MAX_VALUE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(email_L, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(16, 16, 16))))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(agent_L, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(17, 17, 17)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
+                    .addComponent(email_L, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(Agent_L, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(email_L, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(37, 37, 37)
-                        .addComponent(ny_alien, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(105, 105, 105)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(ansvarig_agent_tf, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(jLabel4)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(registreringsdatum_tf, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGap(45, 45, 45)
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(alien_id_tf, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(telefonnummer_tf, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(namn_tf, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                            .addComponent(jLabel6)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(plats_tf, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(avsluta_btn)
+                        .addGap(420, 420, 420))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(ny_email_tf, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(losenord_tf, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(223, 223, 223))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(130, 130, 130)
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(tillbaka_btn)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(48, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(38, 38, 38)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(57, 57, 57))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(tillbaka_btn)
+                        .addGap(224, 224, 224)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(92, 92, 92)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(118, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Agent_L, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(email_L, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(35, 35, 35)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(namn_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(alien_id_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(telefonnummer_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(registreringsdatum_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4))
-                        .addGap(12, 12, 12)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(plats_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(11, 11, 11)
-                        .addComponent(ny_alien, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(ansvarig_agent_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(9, 9, 9)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ny_email_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(9, 9, 9)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(losenord_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(97, Short.MAX_VALUE))
+                            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(avsluta_btn)
+                                .addGap(4, 4, 4)
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void ny_alienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ny_alienActionPerformed
-        // TODO add your handling code here:
-        int id = Integer.parseInt(alien_id_tf.getText());
-        String ans = registreringsdatum_tf.getText();
-        int plats = Integer.parseInt(plats_tf.getText());
-        String tnr = telefonnummer_tf.getText();
-        String namn = namn_tf.getText();        
-        String losen = losenord_tf.getText();
-        String ny_epost = ny_email_tf.getText();
-        int ansvarig_agent = Integer.parseInt(ansvarig_agent_tf.getText());
+ //Metod för att lägga till en ny alien. Flertalet valideringar sker innan data läggs in i tabeller.
+
+        if(Validering.kolla_om_falt_tomt(namn_tf))
+       {
+           if(Validering.kolla_om_falt_tomt(telefonnummer_tf))
+           {
+               if(Validering.kolla_om_falt_tomt(ny_email_tf))
+               {
+                   if(Validering.kollaCB(agent_cb, jLabel7))
+                   {
+                       if(Validering.kollaCB(val_cb, jLabel6))
+                       {
+                           if(Validering.kolla_om_falt_tomt(losenord_tf))
+                           {
+                               if(Validering.losen_langd_tf(losenord_tf))
+                               {
+                                   if(Validering.kollaRadioButton(ras_rb, ras_L) )
+                                   {
+                                       if(Validering.kollaDatum(registreringsdatum_tf))
+                                       {
+                                           try {
+                                       if(!Validering.isAlienEpost(idb.fetchColumn("SELECT Epost from alien;"), ny_email_tf.getText()))
+                                       {
+                                           if(Validering.villlaggaTill())
+                                   {
+//Här hämtas informationen från inmatningsfälten. För att sedan läggas in i respektive tabell.
+
+                                       try {                                         
+                                        String id = idb.getAutoIncrement("alien", "Alien_ID");
+                                        String ans = registreringsdatum_tf.getText();
+
+                                        String plats = "";
+                                        String tnr = telefonnummer_tf.getText();
+                                        String namn = namn_tf.getText();
+                                        String losen = losenord_tf.getText();
+                                        String ny_epost = ny_email_tf.getText();
+                                        int ansvarig_agent = Integer.parseInt(hittaAgentID());
+
+                                        String ras = "";
+
+                                        if(worm_rb.isSelected())
+                                        {
+
+                                            ras = "Insert into worm (Alien_ID, Langd)"+ "values("+id+",'"+extra_tf.getText()+"');";
+
+                                        }else if(squid_rb.isSelected())
+                                        {
+                                            ras = "Insert into squid (Alien_ID, Antal_Armar)"+ "values("+id+",'"+extra_tf.getText()+"');";
+
+                                        }else if(bolodite_rb.isSelected())
+                                        {
+                                            ras = "Insert into boglodite (Alien_ID, Antal_Boogies)"+ "values("+id+",'"+extra_tf.getText()+"');";  
+                                        }
+
+
+
+                                        if (val_cb.getSelectedItem().toString().equals("Örebro"))
+                                        {
+                                            plats = "1";
+
+                                        }
+                                        else if(val_cb.getSelectedItem().toString().equals("Västerås"))
+                                        {
+                                            plats = "2";
+
+                                        }
+                                        else if(val_cb.getSelectedItem().toString().equals("Vilhelmina"))
+                                        {
+                                            plats = "3";
+
+                                        }
+
+                                        else if (val_cb.getSelectedItem().toString().equals("Borås"))
+                                        {
+                                            plats = "4";
+
+                                        }
+
+                                        String spara_andring = "Insert into alien (Alien_ID, Telefon, Registreringsdatum ,Plats , Epost , Losenord, Namn, Ansvarig_Agent)"+ "values(" +id + ", '"+tnr +"','"+ ans +"'," + plats+ ", '"+ny_epost+"', '" + losen + "','" + namn + "' ," + ansvarig_agent +");";
+                                        
+                                            idb.insert(spara_andring);
+                                            idb.insert(ras);
+                                            JOptionPane.showMessageDialog(null, "En ny alien har lagts till");
+
+
+                                    } catch (InfException ex) {
+                                        JOptionPane.showMessageDialog(null, "Något gick fel, ingen alien blev tillagd. Försök igen.");
+
+                                        Logger.getLogger(lagg_till_ny_alien.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                   }
+                                       }
+                                       else{
+                                            JOptionPane.showMessageDialog(null, "Epostadressen finns redan ");
+
+                                       }
+                                   }
+                                   catch (InfException ex) 
+                                   {
+                                       JOptionPane.showMessageDialog(null, "Något gick fel, ingen alien blev tillagd. Försök igen.");
+                                       Logger.getLogger(lagg_till_ny_alien.class.getName()).log(Level.SEVERE, null, ex);
+                                   }
+                                   catch(HeadlessException | NumberFormatException e)
+                                   {
+                                        JOptionPane.showMessageDialog(null, "Något gick fel, ingen alien blev tillagd. Försök igen.");
+
+                                   }
+                                       }
+                                   
+                                   
+                               }
+                               }
+                               
+                           }
+                       }
+                   }
+               }
+           }
+       }
         
-        String spara_andring = "Insert into alien (Alien_ID, Telefon, Registreringsdatum ,Plats , Epost , Losenord, Namn, Ansvarig_Agent)"+ "values(" +id + ", '"+tnr +"','"+ ans +"'," + plats+ ", '"+ny_epost+"', '" + losen + "','" + namn + "' ," + ansvarig_agent +");";
-        try {
-            idb.insert(spara_andring);
-            System.out.println(spara_andring);
-        } catch (InfException ex) {
-            Logger.getLogger(lagg_till_ny_agent.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
+        
+        
+        
        
     }//GEN-LAST:event_ny_alienActionPerformed
+
+    private void worm_rbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_worm_rbActionPerformed
+        // TODO add your handling code here:
+        extra_L.setText("Längd:");
+        
+    }//GEN-LAST:event_worm_rbActionPerformed
+
+    private void bolodite_rbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bolodite_rbActionPerformed
+        // TODO add your handling code here:
+        extra_L.setText("Antal boogies:");
+
+    }//GEN-LAST:event_bolodite_rbActionPerformed
+
+    private void squid_rbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_squid_rbActionPerformed
+        // TODO add your handling code here:
+        extra_L.setText("Antal armar:");
+
+    }//GEN-LAST:event_squid_rbActionPerformed
+
+    private void uppdatera_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uppdatera_btnActionPerformed
+//Metod för att uppdatera informationen om vald alien. Flertalet valideringar sker innan uppdateringen utförs.
+        if(Validering.kolla_om_falt_tomt(namn_tf))
+       {
+           if(Validering.kolla_om_falt_tomt(telefonnummer_tf))
+           {
+               if(Validering.kolla_om_falt_tomt(ny_email_tf))
+               {
+                   if(Validering.kollaCB(agent_cb, jLabel7))
+                   {
+                       if(Validering.kollaCB(val_cb, jLabel6))
+                       {
+                           if(Validering.kolla_om_falt_tomt(losenord_tf))
+                           {
+                               if(Validering.losen_langd_tf(losenord_tf))
+                               {
+                                   if(Validering.kollaRadioButton(ras_rb, ras_L) )
+                                   {
+                                       if(Validering.kollaDatum(registreringsdatum_tf))
+                                       {
+                                           if(Validering.villAndra())
+                                       {
+                                           andraInfo();
+                                           reset();
+                                           JOptionPane.showMessageDialog(null, "Alien uppdaterad");
+                                       }
+                                       }
+                                       
+                                    }
+                               }
+                           }
+                       }
+                   }
+               }
+           }
+       }
+        
+        
+       
+    }//GEN-LAST:event_uppdatera_btnActionPerformed
+
+    private void sok_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sok_btnActionPerformed
+//Metod för att söka upp vald alien från combobox för att sedan fylla textfält, radioknappar och combobox.
+        lasAllt();
+        String hitta_id = hittaID();
+        ny_email_tf.setEditable(false);
+        System.out.println(hitta_id);
+        try {
+            String hemta_rad_id = "SELECT alien.Namn AS 'Namn', alien.Telefon, alien.Alien_ID, alien.Registreringsdatum, alien.Epost, alien.Losenord,  Benamning AS 'plats', alien.Ansvarig_Agent, plats.Plats_ID, concat(worm.Alien_ID, boglodite.Alien_ID, squid.Alien_ID) AS 'Ras' from alien\n" +
+"            LEFT JOIN alien AS boglodite ON alien.Alien_ID = boglodite.Alien_ID\n" +
+"            LEFT JOIN alien AS worm ON alien.Alien_ID = worm.Alien_ID\n" +
+"            LEFT JOIN alien AS squid ON alien.Alien_ID = squid.Alien_ID\n" +
+"            join plats on plats.Plats_ID = alien.Plats where alien.Alien_ID = "+hitta_id+";";
+            
+           
+            HashMap<String, String> allt = idb.fetchRow(hemta_rad_id);
+            System.out.println(" det funka"+allt);
+            
+                String namn = idb.fetchSingle("select Namn from alien where Alien_ID = "+allt.get("Alien_ID"));
+                String id  = allt.get("Alien_ID");
+                String regDatum = allt.get("Registreringsdatum");
+                String epost = allt.get("Epost");
+                String losen = allt.get("Losenord");
+                String tnr = allt.get("Telefon");
+                String omrade = allt.get("Benamning");
+                String ras= getRas (id);
+                String ans = allt.get("Ansvarig_Agent");
+                int plats = Integer.parseInt(allt.get("Plats_ID"));
+               namn_tf.setText(namn);
+               alien_id_tf.setText(id);
+               telefonnummer_tf.setText(tnr);
+               registreringsdatum_tf.setText(regDatum);
+               ny_email_tf.setText(epost);
+               losenord_tf.setText(losen);
+               
+                
+               val_cb.setSelectedIndex(plats);
+               setRas(id);
+               String agentNamn = "select Namn from agent where Agent_ID = '"+ans+"';";
+               String agentNamn_svar = idb.fetchSingle(agentNamn);
+               agent_cb.setSelectedItem( "Namn: "+agentNamn_svar +" "+ "ID: "+ans);
+               
+        } catch (InfException ex) {
+            Logger.getLogger(soka_agent.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        
+    }//GEN-LAST:event_sok_btnActionPerformed
+
+    private void ta_bort_alien_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ta_bort_alien_btnActionPerformed
+//Metod för att ta bort vald alien. Först sker en validering ifall man vill ta bort vald alien. Sedan raderas vald alien från flertalet tabeller.
+        if(Validering.villTaBort())
+        {
+             try {
+            // TODO add your handling code here:
+            String ta_bort_squid = "DELETE FROM squid WHERE Alien_ID = "+alien_id_tf.getText()+";";
+            String ta_bort_worm = "DELETE FROM worm WHERE Alien_ID = "+alien_id_tf.getText()+";";
+            String ta_bort_boglodite = "DELETE FROM boglodite WHERE Alien_ID = "+alien_id_tf.getText()+";";
+            String ta_bort_alien= "DELETE FROM alien WHERE Alien_ID = "+alien_id_tf.getText()+";";
+            
+            String fraga_squid = "select Alien_ID from squid where Alien_ID = "+alien_id_tf.getText()+";";
+            String fraga_worm = "select Alien_ID from worm where Alien_ID = "+alien_id_tf.getText()+";";
+            String fraga_boglodite = "select Alien_ID from boglodite where Alien_ID = "+alien_id_tf.getText()+";";
+            
+            
+            if(idb.fetchColumn(fraga_squid).contains(alien_id_tf.getText()))
+            {
+                idb.delete(ta_bort_squid);
+            }else if(idb.fetchColumn(fraga_worm).contains(alien_id_tf.getText()))
+            {
+                idb.delete(ta_bort_worm);
+                
+            }else if(idb.fetchColumn(fraga_boglodite).contains(alien_id_tf.getText()))
+            {
+                idb.delete(ta_bort_boglodite);
+
+            }
+            
+            idb.delete(ta_bort_alien);
+           
+            
+            
+            reset();
+            alien_val_cb.removeAllItems();
+            fyllCb();
+        } catch (InfException ex) {
+            Logger.getLogger(Info_om_agent.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        }
+       
+    }//GEN-LAST:event_ta_bort_alien_btnActionPerformed
+
+    private void losenord_tfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_losenord_tfActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_losenord_tfActionPerformed
+
+    private void andra_alienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_andra_alienActionPerformed
+        // TODO add your handling code here:
+        lasUppAllt();
+        ras_rb.setEnabled(false);
+    }//GEN-LAST:event_andra_alienActionPerformed
+
+    private void tillbaka_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tillbaka_btnActionPerformed
+        // TODO add your handling code here:
+        Andra_sidan andra_sidan = new Andra_sidan(idb, email_L.getText());
+        andra_sidan.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_tillbaka_btnActionPerformed
+
+    private void avsluta_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_avsluta_btnActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_avsluta_btnActionPerformed
 
     /**
      * @param args the command line arguments
      */
+//Metod för att hämta eventuella uppdateringar.
+    private void andraInfo()
+    {
+        String regDatum = registreringsdatum_tf.getText();
+        int plats = 0;
+        String tnr = telefonnummer_tf.getText();
+        String namn = namn_tf.getText();
+        String losen = losenord_tf.getText();
+        int ansvarig_agent = Integer.parseInt(hittaAgentID());
+        String ras = "";
+        String radera = "";
+
+        
+
+    try {
+           if (worm_rb.isSelected()) {
+
+            
+                if (idb.fetchColumn("SELECT Alien_ID FROM worm").contains(alien_id_tf.getText())) {
+                    ras = "Update worm set Langd ='" + extra_tf.getText() + "' where Alien_ID = " + alien_id_tf.getText() + ";";
+                    idb.update(ras);
+
+                } else if (idb.fetchColumn("SELECT Alien_ID FROM boglodite").contains(alien_id_tf.getText())) {
+                    radera = "Delete from boglodite where Alien_ID = " + alien_id_tf.getText() + ";";
+                    ras = "Insert into worm (Alien_ID, Langd)" + "values(" + alien_id_tf.getText() + ",'" + extra_tf.getText() + "');";
+                    idb.delete(radera);
+                    idb.insert(ras);
+                } else {
+                    radera = "Delete from squid where Alien_ID = " + alien_id_tf.getText() + ";";
+                    ras = "Insert into worm (Alien_ID, Langd)" + "values(" + alien_id_tf.getText() + ",'" + extra_tf.getText() + "');";
+                    idb.delete(radera);
+                    idb.insert(ras);
+                }
+             
+            
+                if (squid_rb.isSelected()) {
+
+                    if (idb.fetchColumn("SELECT Alien_ID FROM squid").contains(alien_id_tf.getText())) {
+                        ras = "Update squid set Antal_Armar ='" + extra_tf.getText() + "' where Alien_ID = " + alien_id_tf.getText() + ";";
+                        idb.update(ras);
+
+                    } else if (idb.fetchColumn("SELECT Alien_ID FROM boglodite").contains(alien_id_tf.getText())) {
+                        radera = "Delete from boglodite where Alien_ID = " + alien_id_tf.getText() + ";";
+                        ras = "Insert into squid (Alien_ID, Antal_Armar)" + "values(" + alien_id_tf.getText() + ",'" + extra_tf.getText() + "');";
+                        idb.delete(radera);
+                        idb.insert(ras);
+                    } else {
+                        radera = "Delete from worm where Alien_ID = " + alien_id_tf.getText() + ";";
+                        ras = "Insert into squid (Alien_ID, Antal_Armar)" + "values(" + alien_id_tf.getText() + ",'" + extra_tf.getText() + "');";
+                        idb.delete(radera);
+                        idb.insert(ras);
+                    }
+
+                }
+            } 
+
+            if (bolodite_rb.isSelected()) 
+            {
+
+                
+                    if (idb.fetchColumn("SELECT Alien_ID FROM boglodite").contains(alien_id_tf.getText())) 
+                    {
+                        ras = "Update boglodite set Antal_Boogies ='" + extra_tf.getText() + "' where Alien_ID = " + alien_id_tf.getText() + ";";
+                        idb.update(ras);
+
+                    } else if (idb.fetchColumn("SELECT Alien_ID FROM worm").contains(alien_id_tf.getText())) {
+                        radera = "Delete from worm where Alien_ID = " + alien_id_tf.getText() + ";";
+                        ras = "Insert into boglodite (Alien_ID, Antal_Boogies)" + "values(" + alien_id_tf.getText() + ",'" + extra_tf.getText() + "');";
+                        idb.delete(radera);
+                        idb.insert(ras);
+                    } else {
+                        radera = "Delete from squid where Alien_ID = " + alien_id_tf.getText() + ";";
+                        ras = "Insert into boglodite (Alien_ID, Antal_Boogies)" + "values(" + alien_id_tf.getText() + ",'" + extra_tf.getText() + "');";
+                        idb.delete(radera);
+                        idb.insert(ras);
+                    }
+
+                }
+
+                if (val_cb.getSelectedItem().toString().equals("Örebro")) 
+                {
+                    plats = 1;
+
+                } if (val_cb.getSelectedItem().toString().equals("Västerås")) {
+                    plats = 2;
+
+                } else if (val_cb.getSelectedItem().toString().equals("Vilhelmina")) {
+                    plats = 3;
+
+                } else if (val_cb.getSelectedItem().toString().equals("Borås")) {
+                    plats = 4;
+
+                }
+                String spara_andring = "Update alien set Telefon = '" + tnr + "', Registreringsdatum = '" + regDatum + "' ,Plats = " + plats + " , Losenord = '" + losen + "', Namn = '" + namn + "', Ansvarig_Agent = " + ansvarig_agent + " where Alien_ID = " + alien_id_tf.getText() + ";";
+                
+                    idb.update(spara_andring);
+
+                    System.out.println(spara_andring);
+        
+                
+     
+                
+        } 
+        catch (InfException ex) {
+            Logger.getLogger(soka_agent.class.getName()).log(Level.SEVERE, null, ex);
+        }
+}   
+    
+//Metod för att fylla combobox med alla aliens namn och id.
+    private void fyllCb() {
+        String alienNamn = "select Namn from alien";
+        
+        ArrayList<String> hamtaAllaAlienNamn;
+        try 
+        {
+           
+            hamtaAllaAlienNamn = idb.fetchColumn(alienNamn);
+            for (String namn : hamtaAllaAlienNamn)
+            {
+                String alienID = "select Alien_ID from alien where Namn = '"+namn+"';";
+
+                String id = idb.fetchSingle(alienID);
+                alien_val_cb.addItem("Namn: "+namn +" "+ "ID: "+id);
+            }            
+            
+        } catch (InfException ex) {
+            Logger.getLogger(Andra_sidan.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+//Metod för att fylla combobox med alla agenters namn och id.
+    private void fyllCbAgent() {
+        String agentNamn = "select Namn from agent";
+        
+        ArrayList<String> hamtaAllaAgentNamn;
+        try {
+           
+            hamtaAllaAgentNamn = idb.fetchColumn(agentNamn);
+            for (String namn : hamtaAllaAgentNamn)
+            {
+                String agentID = "select Agent_ID from agent where Namn = '"+namn+"';";
+
+                String id = idb.fetchSingle(agentID);
+                agent_cb.addItem("Namn: "+namn +" "+ "ID: "+id);
+            }            
+            
+        } catch (InfException ex) {
+            Logger.getLogger(Andra_sidan.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+ 
+ //Metod för att hämta alien id från comboboxen.
+    private String hittaID()
+    {
+            String splitNamn = alien_val_cb.getSelectedItem().toString();
+            String[] arrOfStr = splitNamn.split(": ");
+            String id = arrOfStr[2];
+            
+            return id;
+    }
+  
+//Metod för att hämta agent id från comboboxen.
+     private String hittaAgentID()
+    {
+            String splitNamn = agent_cb.getSelectedItem().toString();
+            String[] arrOfStr = splitNamn.split(": ");
+            String id = arrOfStr[2];
+            
+            return id;
+    }
+   
+//Metod för att hämta ras för en alien.
+    private String getRas (String alienID)
+     {
+        String ras = "Worm";
+        try {
+
+            if (idb.fetchColumn("SELECT Alien_ID FROM boglodite").contains(alienID)) {
+
+                ras = "Boglodite";
+
+            } else if (idb.fetchColumn("SELECT alien_ID from squid").contains(alienID)) {
+
+                ras = "Squid";
+
+            }
+
+        } catch (InfException ex) {
+            Logger.getLogger(soka_agent.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return ras;
+    }
+
+//Metod för ändra radioknapparna för ras och ta fram textfält och extra label anpassat för rasen.
+    private void setRas(String alienID)
+    {
+        String ras = "";
+        try {
+            if (idb.fetchColumn("SELECT Alien_ID FROM boglodite").contains(alienID)) {
+                
+                bolodite_rb.setSelected(true);
+                extra_L.setText("Antal boogies:");
+                ras = "select Antal_Boogies from boglodite where Alien_ID = "+alienID+" ";
+                
+
+            } else if (idb.fetchColumn("SELECT alien_ID from squid").contains(alienID)) {
+
+                squid_rb.setSelected(true);
+                extra_L.setText("Antal armar:");
+                ras = "select Antal_Armar from squid where Alien_ID = "+alienID+" ";
+                
+            }
+            else{
+                worm_rb.setSelected(true);
+                extra_L.setText("Längd:");
+                ras = "select * from worm where Alien_ID = "+alienID+" ";
+
+            }
+            extra_tf.setText(idb.fetchSingle(ras));
+            
+        } catch (InfException ex) {
+            Logger.getLogger(lagg_till_ny_alien.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+//Metod för att återställa alla fält, combobox och radioknappar.
+    private void reset()
+    {
+        alien_val_cb.setSelectedIndex(0);
+        alien_id_tf.setText("");
+        agent_cb.setSelectedIndex(0);
+        bolodite_rb.setSelected(false);
+        extra_L.setText("");
+        extra_tf.setText("");
+        losenord_tf.setText("");
+        namn_tf.setText("");
+        ny_email_tf.setText("");
+        registreringsdatum_tf.setText("");
+        squid_rb.setSelected(false);
+        worm_rb.setSelected(false);
+        telefonnummer_tf.setText("");
+        val_cb.setSelectedIndex(0);
+    }
+ 
+//Metod för att kontrollera om agenten har behörighet att ta bort en alien.
+     public String getAdmin(String epost)
+    {
+        String administrator = "select Administrator from agent where Epost = '" + epost + "'";
+        try {
+            String svar = idb.fetchSingle(administrator);
+            if(svar.equals("J"))
+            {
+                ta_bort_alien_btn.setEnabled(true);
+            }
+            else{
+                ta_bort_alien_btn.setVisible(false);                
+            }            
+        } catch (InfException ex) {
+            Logger.getLogger(Andra_sidan.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return administrator;
+    }
+
+//Metod för att låsa alla fält, radioknappar och combobox.
+    private void lasAllt()
+    {
+        alien_id_tf.setEnabled(false);
+        registreringsdatum_tf.setEnabled(false);
+        agent_cb.setEnabled(false);
+        telefonnummer_tf.setEnabled(false);
+        namn_tf.setEnabled(false);
+        val_cb.setEnabled(false);
+        ny_email_tf.setEnabled(false);
+        squid_rb.setEnabled(false);
+        worm_rb.setEnabled(false);
+        bolodite_rb.setEnabled(false);
+        losenord_tf.setEnabled(false);
+    }
+    
+    //Metod för att låsa upp alla fält, radioknappar och combobox.
+
+     private void lasUppAllt()
+    {
+        alien_id_tf.setEnabled(true);
+        registreringsdatum_tf.setEnabled(true);
+        agent_cb.setEnabled(true);
+        telefonnummer_tf.setEnabled(true);
+        namn_tf.setEnabled(true);
+        val_cb.setEnabled(true);
+        ny_email_tf.setEnabled(true);
+        squid_rb.setEnabled(true);
+        worm_rb.setEnabled(true);
+        bolodite_rb.setEnabled(true);
+        losenord_tf.setEnabled(true);
+    }
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -282,10 +1130,17 @@ public class lagg_till_ny_alien extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel Agent_L;
+    private javax.swing.JLabel agent_L;
+    private javax.swing.JComboBox<String> agent_cb;
     private javax.swing.JTextField alien_id_tf;
-    private javax.swing.JTextField ansvarig_agent_tf;
+    private javax.swing.JComboBox<String> alien_val_cb;
+    private javax.swing.JButton andra_alien;
+    private javax.swing.JButton avsluta_btn;
+    private javax.swing.JRadioButton bolodite_rb;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel email_L;
+    private javax.swing.JLabel extra_L;
+    private javax.swing.JTextField extra_tf;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -293,16 +1148,30 @@ public class lagg_till_ny_alien extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JTextField losenord_tf;
     private javax.swing.JTextField namn_tf;
     private javax.swing.JButton ny_alien;
     private javax.swing.JTextField ny_email_tf;
-    private javax.swing.JTextField plats_tf;
+    private javax.swing.JLabel ras_L;
+    private javax.swing.JRadioButton ras_rb;
     private javax.swing.JTextField registreringsdatum_tf;
+    private javax.swing.JButton sok_btn;
+    private javax.swing.JRadioButton squid_rb;
+    private javax.swing.JButton ta_bort_alien_btn;
     private javax.swing.JTextField telefonnummer_tf;
+    private javax.swing.JButton tillbaka_btn;
+    private javax.swing.JButton uppdatera_btn;
+    private javax.swing.JComboBox<String> val_cb;
+    private javax.swing.JRadioButton worm_rb;
     // End of variables declaration//GEN-END:variables
 }

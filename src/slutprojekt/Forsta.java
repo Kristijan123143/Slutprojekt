@@ -41,13 +41,15 @@ public class Forsta extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jLabel1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel1.setText("E-mail");
 
+        jLabel2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel2.setText("Lösenord");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Arial Nova", 0, 18)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Välkommen till MiB");
 
@@ -68,7 +70,9 @@ public class Forsta extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        Logga_in_btn.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         Logga_in_btn.setText("Logga in");
+        Logga_in_btn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
         Logga_in_btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Logga_in_btnActionPerformed(evt);
@@ -108,52 +112,59 @@ public class Forsta extends javax.swing.JFrame {
                 .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(35, 35, 35)
                 .addComponent(Logga_in_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addContainerGap(56, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void Logga_in_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Logga_in_btnActionPerformed
-        // TODO add your handling code here:
-        
-        if(Validering.kolla_om_falt_tomt(email_tf))
-        {
-            try 
-        {
-            String email = email_tf.getText();
-        
-            String fraga = "SELECT Losenord from agent where Epost ='" + email + "'";
-           
-            String alien_fraga = "SELECT Losenord from alien where Epost ='" + email + "'";
-          
-     
-            String svar = idb.fetchSingle(fraga);
-            String alien_svar = idb.fetchSingle(alien_fraga);
-            
-            if(Validering.ratt_losen(jPasswordField2,svar))
+        /*
+           Söker igenom eposten för både alien och agent och kollar om det finns ett matchande lösenord. 
+           Om ett matchande lösenord hittas så loggas man in i systemet. Annars får man ett felmeddelande om att epost eller lösenord är fel.
+        */
+        boolean soker = true;
+            if (Validering.kolla_om_falt_tomt(email_tf)) 
             {
-                Andra_sidan andra = new Andra_sidan(idb, email_tf.getText());
-                andra.setVisible(true);
+                if(Validering.kolla_om_losen_tomt(jPasswordField2))
+                {
+                     try {
+                if (Validering.isAgentEpost(idb.fetchColumn("SELECT Epost from agent;"), email_tf.getText())) {
+                    
+                    soker = false;
+                  
+                    if (Validering.ratt_losen(jPasswordField2,idb.fetchSingle("SELECT Losenord from agent where Epost = '" + email_tf.getText() + "';"))) 
+                    {
+                       Andra_sidan andra_sidan = new Andra_sidan(idb, email_tf.getText());
+                       andra_sidan.setVisible(true);
+                       this.dispose();
+                    }
+                    
+                } else if (Validering.isAlienEpost(idb.fetchColumn("SELECT Epost from alien;"), email_tf.getText())) 
+                {
+                    
+                    soker = false;
+                    
+                    if (Validering.ratt_losen(jPasswordField2,idb.fetchSingle("SELECT Losenord from alien where Epost = '" + email_tf.getText() + "';"))) 
+                    {
+                        Andra_sidan_alien andra_sidan_alien = new Andra_sidan_alien(idb, email_tf.getText());
+                        andra_sidan_alien.setVisible(true);
+                        this.dispose();
+                    }
+                }
                 
+                if (soker) {
+                    JOptionPane.showMessageDialog(null, "Eposten finns inte!");
+                }
+            } catch (InfException ex) {
+                Logger.getLogger(Forsta.class.getName()).log(Level.SEVERE, null, ex);
             }
-            else if (Validering.ratt_losen(jPasswordField2,alien_svar))
-            {
-                new Andra_sidan_alien(idb, email_tf.getText()).setVisible(true);
+                }
+           
             }
-            else
-            {
-                JOptionPane.showMessageDialog(null, "Felaktig inloggningsuppgift");
-            }
-
-        } catch (InfException ex) {
-            Logger.getLogger(Forsta.class.getName()).log(Level.SEVERE, null, ex);
-        }
-            
-        }
         
         
     }//GEN-LAST:event_Logga_in_btnActionPerformed

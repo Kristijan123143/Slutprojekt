@@ -26,14 +26,15 @@ public class soka_agent extends javax.swing.JFrame {
     /**
      * Creates new form soka_agent
      */
-    public soka_agent(InfDB idb, String email) {
+    public soka_agent(InfDB idb, String email, String namn) {
         initComponents();
         this.idb = idb;
-        Agent_L.setText(email);
-        model = (DefaultTableModel) alien_tb.getModel();
+        email_L.setText(email);
+        agent_L.setText(namn);
+        model = (DefaultTableModel) agent_tb.getModel();
         val="";
     }
-
+//Metod för att hämta om agenten är områdeschef eller kontorschef.
     private String getBefattning (String agentID){
 
         String befattning = "Fältagent";
@@ -65,8 +66,7 @@ public class soka_agent extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        Agent_L = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -75,13 +75,27 @@ public class soka_agent extends javax.swing.JFrame {
         sok_agent_btn = new javax.swing.JButton();
         datum_tf = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
-        alien_tb = new javax.swing.JTable();
+        agent_tb = new javax.swing.JTable();
+        avsluta_btn = new javax.swing.JButton();
+        tillbaka_btn = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        email_L = new javax.swing.JLabel();
+        agent_L = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI Historic", 0, 12)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText(" Inloggad som Agent A");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -129,7 +143,7 @@ public class soka_agent extends javax.swing.JFrame {
             }
         });
 
-        alien_tb.setModel(new javax.swing.table.DefaultTableModel(
+        agent_tb.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -152,21 +166,77 @@ public class soka_agent extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(alien_tb);
+        jScrollPane2.setViewportView(agent_tb);
+
+        avsluta_btn.setText("Avsluta");
+        avsluta_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                avsluta_btnActionPerformed(evt);
+            }
+        });
+
+        tillbaka_btn.setText("Tillbaka");
+        tillbaka_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tillbaka_btnActionPerformed(evt);
+            }
+        });
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI Historic", 0, 12)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText(" Inloggad som ");
+
+        jLabel4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel4.setText("Epost");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(agent_L, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel4)
+                        .addGap(18, 18, 18)
+                        .addComponent(email_L, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(agent_L, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(11, 11, 11)
+                        .addComponent(jLabel4))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(email_L, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(98, 98, 98))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 636, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(Agent_L, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(613, Short.MAX_VALUE))
+                    .addComponent(tillbaka_btn)
+                    .addComponent(avsluta_btn))
+                .addGap(16, 16, 16))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
@@ -190,17 +260,20 @@ public class soka_agent extends javax.swing.JFrame {
                                             .addComponent(sok_agent_tf, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addGap(24, 24, 24)
                                     .addComponent(sok_agent_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 232, Short.MAX_VALUE)))
                     .addContainerGap()))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(Agent_L, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(381, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(avsluta_btn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(tillbaka_btn)))
+                .addContainerGap(525, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(11, 11, 11)
@@ -213,7 +286,7 @@ public class soka_agent extends javax.swing.JFrame {
                         .addComponent(sok_agent_tf, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addComponent(datum_tf, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 172, Short.MAX_VALUE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(11, 11, 11)))
         );
@@ -222,7 +295,7 @@ public class soka_agent extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void val_cbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_val_cbActionPerformed
-
+//Metod för att få ett förutbestämt sökord i sökfältet beroende på val i combobox.
         sok = sok_agent_tf.getText(); // uppdaterar
         sok_agent_tf.setEnabled(true);
 
@@ -261,22 +334,24 @@ public class soka_agent extends javax.swing.JFrame {
     }//GEN-LAST:event_sok_agent_tfActionPerformed
 
     private void sok_agent_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sok_agent_btnActionPerformed
-        // TODO add your handling code here:
-        
+//Metod för att söka en agent.        
         model.setRowCount(0);
-        sok = sok_agent_tf.getText();
         datum = datum_tf.getText();
         
-        //String val1 = getBefattning(id);
+        sok = sok_agent_tf.getText().substring(0,1).toUpperCase() + sok_agent_tf.getText().substring(1);
+        
+        
         sok_agent_btn.addActionListener(val_cb.getAction());
-
-        if(val_cb.getSelectedItem().toString().equals("Namn"))
+        if(Validering.finnsIngenTabell(agent_tb, sok_agent_tf, val_cb))
+        {
+            if(val_cb.getSelectedItem().toString().equals("Namn"))
         {
             val = "where agent.Namn like '%"+sok+"%'";
             System.out.println("Namn vald");
         }
         else if(val_cb.getSelectedItem().toString().equals("Anställningsdatum"))
         {
+            datum_tf.setEnabled(true);
 
             if(datum_tf.getText().isEmpty())
             {
@@ -284,13 +359,14 @@ public class soka_agent extends javax.swing.JFrame {
             }
             else
             {
-                val = "WHERE DATE_FORMAT(agent.Anstallningsdaum, '%Y-%m-%d') >= '"+sok+"' AND DATE_FORMAT(agent.Anstallningsdatum, '%Y-%m-%d') <= '"+datum+"%';";
+                    val = "WHERE DATE_FORMAT(agent.Anstallningsdatum, '%Y-%m-%d') >= '"+sok+"' AND DATE_FORMAT(agent.Anstallningsdatum, '%Y-%m-%d') <= '"+datum+"%';";
             }
         }
         else if(val_cb.getSelectedItem().toString().equals("ID"))
         {
             val = "where agent.Agent_ID = "+sok+"";
         }
+        
         else if(val_cb.getSelectedItem().toString().equals("Område"))
         {
 
@@ -305,8 +381,7 @@ public class soka_agent extends javax.swing.JFrame {
             val = "where agent.Epost like '"+sok+"%'";
         }
 
-
-        //sok_alien_tf.addActionListener(sok_alien_btn.getAction());
+//Här hämtas informationen om en agent och uppdaterar tabellen med den informationen.
         try {
             String hemta_rad_id = "SELECT agent.Namn AS 'Namn', agent.Telefon, agent.Agent_ID, agent.Anstallningsdatum, agent.Epost, agent.Losenord,agent.Administrator, Benamning AS 'Omrade', concat(faltagent.Agent_ID, omradeschef.Agent_ID, kontorschef.Agent_ID) AS 'Kategori' from agent\n" +
 "            LEFT JOIN agent AS kontorschef ON agent.Agent_ID = kontorschef.Agent_ID\n" +
@@ -325,11 +400,8 @@ public class soka_agent extends javax.swing.JFrame {
             {
                 hemta_rad_id = "SELECT * from faltagent join agent on faltagent.Agent_ID = agent.Agent_ID join omrade on omrade.Omrades_ID = agent.Omrade;";
             }
-            
-            System.out.println(val);
 
             ArrayList<HashMap<String, String>> info = idb.fetchRows(hemta_rad_id);
-            System.out.println(" det funka"+info);
             for(HashMap<String,String> allt : info)
             {
                 String namn = idb.fetchSingle("select Namn from agent where Agent_ID = "+allt.get("Agent_ID"));
@@ -339,29 +411,8 @@ public class soka_agent extends javax.swing.JFrame {
                 String losen = allt.get("Losenord");
                 String tnr = allt.get("Telefon");
                 String omrade = allt.get("Benamning");
-                //String kategori = allt.get("kategori");
                 String admin = allt.get("Administrator");
                 String kategori = getBefattning(id);
-                //ArrayList<String> befattning = idb.fetchColumn(val1);
-                //befattning = getBefattning(id);
-                System.out.println(id + "," + ansDatum + "," + epost + "," + losen +"," + namn + ","+ tnr + ","+ omrade + ","+ admin);
-                
-                
-                /*
-                if(kategori.equals("1,1,1")){
-                    kategori = "";
-                    model.addRow(new Object[]{id,ansDatum,epost,losen,namn,tnr,omrade,kategori});
-
-                }else if(kategori.equals("2,2,2")){
-                    kategori = "Squid";
-                    model.addRow(new Object[]{id,ansDatum,epost,losen,namn,tnr,omrade,kategori});
-
-                }
-                else if(kategori.equals("3,3,3")){
-                    kategori = "Worm";
-                    model.addRow(new Object[]{id,ansDatum,epost,losen,namn,tnr,omrade,kategori});
-                }
-                */
                 
                 if(admin.equals("J"))
                 {
@@ -377,6 +428,8 @@ public class soka_agent extends javax.swing.JFrame {
         } catch (InfException ex) {
             Logger.getLogger(soka_agent.class.getName()).log(Level.SEVERE, null, ex);
         }
+        }
+        
 
         if(sok_agent_tf.getText().isEmpty())
         {
@@ -384,10 +437,22 @@ public class soka_agent extends javax.swing.JFrame {
         }
         sok_agent_tf.setText("");
         val="";
-        datum_tf.setVisible(false);
+        datum_tf.setEnabled(false);
         val_cb.setSelectedIndex(0);
         datum_tf.setText("");
     }//GEN-LAST:event_sok_agent_btnActionPerformed
+
+    private void tillbaka_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tillbaka_btnActionPerformed
+        // TODO add your handling code here:
+        Andra_sidan andra_sidan = new Andra_sidan(idb, email_L.getText());
+        andra_sidan.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_tillbaka_btnActionPerformed
+
+    private void avsluta_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_avsluta_btnActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_avsluta_btnActionPerformed
    
     
     /**
@@ -426,16 +491,22 @@ public class soka_agent extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel Agent_L;
-    private javax.swing.JTable alien_tb;
+    private javax.swing.JLabel agent_L;
+    private javax.swing.JTable agent_tb;
+    private javax.swing.JButton avsluta_btn;
     private javax.swing.JTextField datum_tf;
+    private javax.swing.JLabel email_L;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton sok_agent_btn;
     private javax.swing.JTextField sok_agent_tf;
+    private javax.swing.JButton tillbaka_btn;
     private javax.swing.JComboBox<String> val_cb;
     // End of variables declaration//GEN-END:variables
 }
