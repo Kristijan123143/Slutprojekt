@@ -145,6 +145,7 @@ public class Validering {
         if(losenord_tf.getPassword().length > 7)
         {
             JOptionPane.showMessageDialog(null, "Lösenordet är för långt, max 6 tecken ");
+           
         }else{
             kolla = true; 
         }
